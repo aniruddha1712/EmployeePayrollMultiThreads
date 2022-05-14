@@ -31,5 +31,18 @@ namespace EmpPayrollMultiThreads
         {
             return this.list.Count;
         }
+        public void AddEmployeeToPayrollWithThread(List<Employee> list)
+        {
+            list.ForEach(employeeData =>
+            {
+                Task thread = new Task(() =>
+                {
+                    Console.WriteLine("Employee being added: " + employeeData.EmployeeName);
+                    AddEmployeePayroll(employeeData);
+                    Console.WriteLine("Employee added: " + employeeData.EmployeeName);
+                });
+                thread.Start();
+            });
+        }
     }
 }
